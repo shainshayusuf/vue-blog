@@ -1,4 +1,5 @@
 import Vuex from 'vuex'
+import axios from 'axios'
 
 const createStore =() => {
     return new Vuex.Store({
@@ -12,33 +13,15 @@ const createStore =() => {
         },
         actions:{
             nuxtServerInit(vuexContext,context){
-                return new Promise(resolve => {
-                    setTimeout(() => {
-                        vuexContext.commit('setPosts',[{
-                              id: '1',
-                              title: 'First post',
-                              previewText: 'Herman Ostrovskiy',
-                              thumbnail:
-                              "https://static.pexels.com/photos/270348/pexels-photo-270348.jpeg"
-                            },
-                              {
-                                id: '2',
-                                title: 'Second post',
-                                previewText: 'Herman Ostrovskiy too',
-                                thumbnail:
-                              "https://static.pexels.com/photos/270348/pexels-photo-270348.jpeg"
-                              },
-                              {
-                                id: '3',
-                                title: 'Third post',
-                                previewText: 'Herman Ostrovskiy too',
-                                thumbnail:
-                              "https://static.pexels.com/photos/270348/pexels-photo-270348.jpeg"
-                              }]
-                           )
-                      resolve()
-                    }, 1000);
-                });
+              return axios.get('https://nuxt-blog-d8707.firebaseio.com/posts.json').then(
+                  res =>{
+                      const postArray=[]
+                      for(const key in res.data){
+                          postArray.push({...res.data[key],id:key})
+                      }
+                      vuexContext.commit('setPosts',postArray)
+                  }
+              ).catch(e =>context.error(e))
             
             },
             setPosts(vuexContext,posts){
