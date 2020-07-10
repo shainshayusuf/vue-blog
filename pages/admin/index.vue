@@ -20,43 +20,12 @@ export default {
         PostList,
         AppButton
     },
-    async asyncData() {
+   computed:{
+     loadedPosts(){
+     return this.$store.getters.loadedPosts
+   }
+   }
 
-      let promise = new Promise(resolve => {
-        setTimeout(() => {
-          resolve(
-            [{
-              id: '1',
-              title: 'First post',
-              previewText: 'Herman Ostrovskiy',
-              thumbnail:
-              "https://static.pexels.com/photos/270348/pexels-photo-270348.jpeg"
-            },
-              {
-                id: '2',
-                title: 'Second post',
-                previewText: 'Herman Ostrovskiy too',
-                thumbnail:
-              "https://static.pexels.com/photos/270348/pexels-photo-270348.jpeg"
-              },
-              {
-                id: '3',
-                title: 'Third post',
-                previewText: 'Herman Ostrovskiy too',
-                thumbnail:
-              "https://static.pexels.com/photos/270348/pexels-photo-270348.jpeg"
-              }]
-          )
-        }, 1000)
-      })
-
-      let loadedPosts = await promise;
-
-      return {
-        loadedPosts
-      }
-
-    }
 }
 </script>
 
