@@ -9,16 +9,16 @@
 
 <script>
 import AdminPostForm from '@/components/Admin/AdminPostForm'
-import axios from 'axios'
+
 export default {
     layout:'admin',
    components:{
        AdminPostForm
    } ,
    asyncData(context){
-     return axios.get('https://nuxt-blog-d8707.firebaseio.com/posts/'+context.params.postid+'.json').then(res =>{
+     return context.app.$axios.$get('/posts/'+context.params.postid+'.json').then(data =>{
      return {
-       loadedPost:res.data
+       loadedPost:{...data,id:context.params.postid}
      }
 
    }).catch(e=>{
@@ -27,7 +27,7 @@ export default {
    },
    methods:{
      onSubmitted(editedPost){
-           axios.put('https://nuxt-blog-d8707.firebaseio.com/posts/'+this.$route.params.postid+'.json',editedPost).then(res =>{
+           this.$store.dispatch('editPost',editedPost).then(()=>{
              this.$router.push('/admin')
            }).catch(e =>{
              console.log(e)

@@ -21,16 +21,21 @@ export default {
       {rel:"stylesheet",href:"https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"}
     ]
   },
+
+  loading:{color:'#c2bcac'},
   /*
   ** Global CSS
   */
   css: [
+    '~assets/styles/main.css'
   ],
   /*
   ** Plugins to load before mounting the App
   ** https://nuxtjs.org/guide/plugins
   */
   plugins: [
+    '~plugins/components.js',
+    '~plugins/date-filter.js'
   ],
   /*
   ** Nuxt.js dev-modules
@@ -41,11 +46,23 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
+    '@nuxtjs/axios'
   ],
+  axios:{
+    baseURL:process.env.BASE_URL ||'https://nuxt-blog-d8707.firebaseio.com',
+    credentials:false
+  },
   /*
   ** Build configuration
   ** See https://nuxtjs.org/api/configuration-build/
   */
   build: {
+  },
+  env:{
+    baseUrl:process.env.BASE_URL ||'https://nuxt-blog-d8707.firebaseio.com'
+  },
+  transition:{
+    name:'fade',
+    mode:'out-in'
   }
 }
