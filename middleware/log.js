@@ -1,5 +1,5 @@
 export default function(context){
-    if(!context.store.getters.isAutenticated){
+    if(!context.store.getters.isAuthenticated){
       context.redirect('/admin/auth/')
     }
 }
