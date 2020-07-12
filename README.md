@@ -1,4 +1,4 @@
-# first-project
+# vue-blog
 
 ## Build Setup
 
